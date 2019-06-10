@@ -5,19 +5,19 @@ var number = round;
 
 for(g = 0; g < 5; g++)
 
-var guess = console.log("I thought of a Number 1-100, Guess my Number, You have 5 Chances!")
+var guess = prompt("I thought of a Number 1-100, Guess my Number, You have 5 Chances!", "Enter your number here")
 
 if(guess < number){
 
-	console.log("higher." + c);
+	prompt("higher." + c, "Enter your new number here");
 }
 
 else if(guess > number)
 {
-	console.log("lower." + c);
+	prompt("lower." + c, "Enter your new number here");
 }
 else
 {
-	console.log("You guessed it! " + number);
+	alert("You guessed it! " + number, "Want to play again?");
 }
 

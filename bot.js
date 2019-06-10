@@ -1,6 +1,17 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var random = (Math.random());
+var multiply = random * 100;
+var round = Math.round(multiply) ;
+var number = round;
+var currentGuess = null
+var currentMax = 100
+var currentMin = 1
+
+function newNumber(){
+    currentGuess = Math.floor((currentMax + currentMin) / 2);
+        }
 
 function Now(){
 //Date Creation
@@ -110,9 +121,62 @@ bot.on('message', function (user, userID, channelID, message, evt) {
             case 'commands':
                 bot.sendMessage({
                     to: channelID,
-                    message: 'My commands are !hi, !date, !commands, and !creator. (More coming soon!)'
+                    message: 'My commands are !hi, !date, !commands, !creator, !guess, !ready, !higher, !lower, !correct. (More coming soon!)'
                 });
             break;
+
+            case 'guess':
+                newNumber();
+                bot.sendMessage({
+                    to: channelID,
+                    message: 'Think of a Number between 1 and 100, When you have the number, say !ready, and say !correct when I guess it'
+                });
+            break;
+
+            case 'ready':
+                bot.sendMessage({
+                    to: channelID,
+                    message: "My guess is " + currentGuess + " tell me if it is !higher or !lower than my guess"
+                });
+            break;
+
+            case 'higher':
+            currentMin = currentGuess + 1
+                currentGuess = (currentMax + currentMin) / 2
+                currentGuess = Math.floor(currentGuess)
+                if(currentGuess >= 100){
+                    currentGuess = 100
+                    currentMax = 100
+                }
+                bot.sendMessage({
+                    to: channelID,
+                    message: "My guess is " + currentGuess + " Tell me if it is !higher or !lower than my guess"
+                });
+            break;
+
+            case 'lower':
+            currentMax = currentGuess - 1
+                currentGuess = (currentMax + currentMin) / 2
+                currentGuess = Math.floor(currentGuess)
+            if(currentMax == 2){
+                currentGuess = currentMax
+            }
+                bot.sendMessage({
+                    to: channelID,
+                    message: "My guess is " + currentGuess + " Tell me if the number is !higher or !lower than my guess "
+                });
+            break;
+
+            case 'correct':
+                currentMax = 100
+                currentMin = 1
+                currentGuess = Math.floor((currentMax + currentMin) / 2 );
+                bot.sendMessage({
+                    to: channelID,
+                    message: "I got it " + " Type !guess to play again."
+                });
+            break;
+
 
          
 
